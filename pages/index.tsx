@@ -5,11 +5,50 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import PetsIcon from '@mui/icons-material/Pets'
 import { makeStyles } from '@material-ui/styles'
+import { blueGrey, blue } from '@mui/material/colors'
+import { Typography } from '@mui/material'
+import Link from 'next/link'
 
 
 const useStyles = makeStyles({
   navbar: {
-    borderBottom: '1px solid black'
+    height: '10vh',
+    padding: 10,
+    borderBottom: '1px solid',
+    borderBottomColor: blueGrey[100],
+    display: 'flex',
+    alignItems: 'center',
+    gap: 10,
+    color: blueGrey[700]
+  },
+  logo: {
+    color: blueGrey[300],
+    '&:hover': {
+      color: blueGrey[500]
+    }
+  },
+  main: {
+    height: '85vh',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  footer: {
+    height: '5vh',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 5
+  },
+  github: {
+    color: blue[300],
+    cursor: 'pointer',
+    '&:hover': {
+      textDecoration: 'underline'
+    }
   }
 })
 
@@ -31,9 +70,22 @@ const Home: NextPage = () => {
       </Head>
 
       <Box className={styles.navbar}>
-        <PetsIcon />
+        <PetsIcon className={styles.logo} fontSize={'large'} />
+        <Typography variant="h4" component="p">
+          Share Peis
+        </Typography>
       </Box>
-
+      <Box className={styles.main}>
+        hola
+      </Box>
+      <Box className={styles.footer}>
+        Developed by
+        <Link href="https://github.com/lmhmDev" passHref={true}>
+          <Typography className={styles.github}>
+            Lorenzo Hermoso
+          </Typography>
+        </Link>
+      </Box>
     </div>
   )
 }
