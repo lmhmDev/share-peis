@@ -137,6 +137,7 @@ const Home: NextPage = () => {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
         />
+        <meta property="og:image" content="/favicon.svg"></meta>
       </Head>
 
       <Box className={styles.navbar}>
