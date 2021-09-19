@@ -98,6 +98,7 @@ const Home: NextPage = () => {
   const [imgUrl, setImgUrl] = useState('');
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
+  const [breed, setBreed] = useState('')
 
   useEffect(() => {
     async function fetch() {
@@ -105,6 +106,7 @@ const Home: NextPage = () => {
       setImgUrl(response.data[0].url)
       setHeight(response.data[0].height)
       setWidth(response.data[0].width)
+      setBreed(response.data[0].breeds[0].name)
     }
     fetch();
 
@@ -112,6 +114,7 @@ const Home: NextPage = () => {
 
   const newDog = async () => {
     setImgUrl('')
+    setBreed('')
     const response: Response = await axios.get('https://api.thedogapi.com/v1/images/search?limit=1')
     setImgUrl(response.data[0].url)
     setHeight(response.data[0].height)
@@ -150,8 +153,8 @@ const Home: NextPage = () => {
                 style={{
                   fontWeight: 300
                 }}>
-                Shar Pei
-            </Typography>
+                {breed}
+              </Typography>
             </Grid>
             {imgUrl ?
               <>
