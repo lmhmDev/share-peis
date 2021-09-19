@@ -6,8 +6,41 @@ import Grid from '@mui/material/Grid'
 import PetsIcon from '@mui/icons-material/Pets'
 import { makeStyles } from '@material-ui/styles'
 import { blueGrey, blue } from '@mui/material/colors'
-import { Typography } from '@mui/material'
+import { Button, Card, CardMedia, Typography } from '@mui/material'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import CircularProgress from '@mui/material/CircularProgress'
+import axios from 'axios'
+
+
+export interface Response {
+  data: Data[]
+}
+
+export interface Data {
+  breeds: Breed[];
+  id: string;
+  url: string;
+  width: number;
+  height: number;
+}
+
+export interface Breed {
+  weight: Metrics;
+  height: Metrics;
+  id: number;
+  name: string;
+  bred_for: string;
+  breed_group: string;
+  life_span: string;
+  temperament: string;
+  reference_image_id: string;
+}
+
+export interface Metrics {
+  imperial: string;
+  metric: string;
+}
 
 
 const useStyles = makeStyles({
@@ -35,6 +68,13 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  container: {
+    width: '50%',
+    height: 'fit-content',
+    maxHeight: 700,
+    minWidth: 250,
+    padding: 10
+  },
   footer: {
     height: '5vh',
     display: 'flex',
@@ -55,6 +95,28 @@ const useStyles = makeStyles({
 const Home: NextPage = () => {
 
   const styles = useStyles();
+  const [imgUrl, setImgUrl] = useState('');
+  const [height, setHeight] = useState(0);
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    async function fetch() {
+      const response: Response = await axios.get('https://api.thedogapi.com/v1/images/search?limit=1')
+      setImgUrl(response.data[0].url)
+      setHeight(response.data[0].height)
+      setWidth(response.data[0].width)
+    }
+    fetch();
+
+  }, [])
+
+  const newDog = async () => {
+    setImgUrl('')
+    const response: Response = await axios.get('https://api.thedogapi.com/v1/images/search?limit=1')
+    setImgUrl(response.data[0].url)
+    setHeight(response.data[0].height)
+    setWidth(response.data[0].width)
+  }
 
   return (
     <div>
@@ -76,7 +138,44 @@ const Home: NextPage = () => {
         </Typography>
       </Box>
       <Box className={styles.main}>
-        hola
+        <Card className={styles.container}>
+          <Grid container >
+            <Grid item container flexDirection='column'>
+              <Typography style={{
+                fontWeight: 800
+              }}>
+                Breed:
+            </Typography>
+              <Typography
+                style={{
+                  fontWeight: 300
+                }}>
+                Shar Pei
+            </Typography>
+            </Grid>
+            {imgUrl ?
+              <>
+                <CardMedia
+                  component='img'
+                  height={400}
+                  width={width}
+                  image={imgUrl} />
+                <Button onClick={newDog} style={{
+                  marginTop: 10
+                }}>New Dog</Button>
+              </>
+              :
+              <Box style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center'
+              }}>
+                <CircularProgress style={{ color: blueGrey[300] }} />
+              </Box>
+            }
+
+          </Grid>
+        </Card>
       </Box>
       <Box className={styles.footer}>
         Developed by
