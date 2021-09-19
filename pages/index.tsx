@@ -119,6 +119,7 @@ const Home: NextPage = () => {
     setImgUrl(response.data[0].url)
     setHeight(response.data[0].height)
     setWidth(response.data[0].width)
+    setBreed(response.data[0].breeds[0].name)
   }
 
   return (
