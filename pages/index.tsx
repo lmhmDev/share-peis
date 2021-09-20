@@ -66,13 +66,10 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: '0 20px'
   },
   container: {
-    width: '50%',
-    height: 'fit-content',
-    maxHeight: 700,
-    minWidth: 250,
     padding: 10
   },
   footer: {
@@ -96,16 +93,12 @@ const Home: NextPage = () => {
 
   const styles = useStyles();
   const [imgUrl, setImgUrl] = useState('');
-  const [height, setHeight] = useState(0);
-  const [width, setWidth] = useState(0);
   const [breed, setBreed] = useState('')
 
   useEffect(() => {
     async function fetch() {
       const response: Response = await axios.get('https://api.thedogapi.com/v1/images/search?limit=1')
       setImgUrl(response.data[0].url)
-      setHeight(response.data[0].height)
-      setWidth(response.data[0].width)
       if (response.data[0].breeds[0]) {
         setBreed(response.data[0].breeds[0].name)
       }
@@ -119,8 +112,6 @@ const Home: NextPage = () => {
     setBreed('')
     const response: Response = await axios.get('https://api.thedogapi.com/v1/images/search?limit=1')
     setImgUrl(response.data[0].url)
-    setHeight(response.data[0].height)
-    setWidth(response.data[0].width)
     if (response.data[0].breeds[0]) {
       setBreed(response.data[0].breeds[0].name)
     }
@@ -148,7 +139,7 @@ const Home: NextPage = () => {
       </Box>
       <Box className={styles.main}>
         <Card className={styles.container}>
-          <Grid container >
+          <Grid >
             <Grid item container flexDirection='column'>
               <Typography style={{
                 fontWeight: 800
@@ -167,7 +158,7 @@ const Home: NextPage = () => {
                 <CardMedia
                   component='img'
                   height={400}
-                  width={width}
+                  width='100%'
                   image={imgUrl} />
                 <Button onClick={newDog} style={{
                   marginTop: 10
