@@ -62,7 +62,6 @@ const useStyles = makeStyles({
   },
   main: {
     height: '85vh',
-    maxHeight: '85vh',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
