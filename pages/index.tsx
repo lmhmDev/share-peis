@@ -11,6 +11,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import CircularProgress from '@mui/material/CircularProgress'
 import axios from 'axios'
+import storage from '../utils/storage'
 
 
 export interface Response {
@@ -91,13 +92,15 @@ const useStyles = makeStyles({
 
 const Home: NextPage = () => {
 
-  const styles = useStyles();
-  const [imgUrl, setImgUrl] = useState('');
+  const styles = useStyles()
+  const [imgUrl, setImgUrl] = useState('')
   const [breed, setBreed] = useState('')
+  const [object, setObject] = useState({})
 
   useEffect(() => {
     async function fetch() {
       const response: Response = await axios.get('https://api.thedogapi.com/v1/images/search?limit=1')
+      setObject(response.data[0])
       setImgUrl(response.data[0].url)
       if (response.data[0].breeds[0]) {
         setBreed(response.data[0].breeds[0].name)
@@ -111,9 +114,21 @@ const Home: NextPage = () => {
     setImgUrl('')
     setBreed('')
     const response: Response = await axios.get('https://api.thedogapi.com/v1/images/search?limit=1')
+    setObject(response.data[0])
     setImgUrl(response.data[0].url)
     if (response.data[0].breeds[0]) {
       setBreed(response.data[0].breeds[0].name)
+    }
+  }
+
+  const fav = () => {
+    const favs: string | null = storage.get('favs')
+    if (favs) {
+      const favsArray = JSON.parse(favs)
+      favsArray.push(object)
+      storage.set('favs', JSON.stringify(favsArray))
+    } else {
+      storage.set('favs', JSON.stringify([object]))
     }
   }
 
@@ -162,7 +177,14 @@ const Home: NextPage = () => {
                   image={imgUrl} />
                 <Button onClick={newDog} style={{
                   marginTop: 10
-                }}>New Dog</Button>
+                }}>
+                  New Dog
+                </Button>
+                <Button onClick={fav} style={{
+                  marginTop: 10
+                }}>
+                  Add to favorite
+                </Button>
               </>
               :
               <Box style={{
