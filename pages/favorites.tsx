@@ -20,6 +20,13 @@ const Favorites = () => {
 
     const [favorites, setFavorites] = useState([])
 
+    const remove = (url: string) => {
+        const newFavs = favorites.filter(favorite => favorite.url != url)
+
+        setFavorites(newFavs)
+        storage.set('favs', JSON.stringify(newFavs))
+    }
+
 
     useEffect(() => {
         async function fetch() {
@@ -39,7 +46,7 @@ const Favorites = () => {
                     favorites.map(favorite => {
                         return (
                             <Grid item xs={3} key={favorite}>
-                                <Favorite favorite={favorite} />
+                                <Favorite favorite={favorite} remove={remove} />
                             </Grid>)
                     }) : ''
             }

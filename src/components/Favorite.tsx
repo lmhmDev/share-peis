@@ -35,7 +35,7 @@ export const Favorite = (props: any) => {
                         {props.favorite.breeds[0] ? props.favorite.breeds[0].name : 'Who knows...'}
                     </Typography>
                 </Grid>
-                <Button onClick={() => console.log('jiji')} style={{
+                <Button onClick={() => props.remove(props.favorite.url)} style={{
                     marginTop: 10,
                     fontSize: 10,
                 }}>
