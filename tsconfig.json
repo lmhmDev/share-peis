@@ -19,11 +19,10 @@
     "jsx": "preserve"
   },
   "include": [
+    "src",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/**/*",
-    "src/**/*"
   ],
   "exclude": [
     "node_modules"
