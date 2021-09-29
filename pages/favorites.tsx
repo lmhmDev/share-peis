@@ -38,7 +38,7 @@ const Favorites = () => {
                 favorites ?
                     favorites.map(favorite => {
                         return (
-                            <Grid item xs={3}>
+                            <Grid item xs={3} key={favorite}>
                                 <Favorite favorite={favorite} />
                             </Grid>)
                     }) : ''
