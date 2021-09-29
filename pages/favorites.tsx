@@ -72,7 +72,7 @@ const Favorites = () => {
                 favorites ?
                     favorites.map(favorite => {
                         return (
-                            <Grid item xs={3} key={favorite}>
+                            <Grid item xs={3} key={favorite.id}>
                                 <Favorite favorite={favorite} remove={remove} />
                             </Grid>)
                     }) : ''
