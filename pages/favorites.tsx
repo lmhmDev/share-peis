@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
 import { Grid } from '@mui/material'
 import React, { useState } from 'react'
-import { Favorite } from '../components/Favorite'
+import { Favorite } from '../src/components/Favorite'
 import { useEffect } from 'react';
 import storage from '../utils/storage';
 
