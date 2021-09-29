@@ -6,6 +6,32 @@ import { useEffect } from 'react';
 import storage from '../utils/storage';
 
 
+export interface Favorite {
+    breeds: Breed[];
+    id: string;
+    url: string;
+    width: number;
+    height: number;
+}
+
+export interface Breed {
+    weight: Metrics;
+    height: Metrics;
+    id: number;
+    name: string;
+    bred_for: string;
+    breed_group: string;
+    life_span: string;
+    temperament: string;
+    reference_image_id: string;
+}
+
+export interface Metrics {
+    imperial: string;
+    metric: string;
+}
+
+
 const useStyles = makeStyles({
     main: {
         height: '85vh',
@@ -18,13 +44,14 @@ const Favorites = () => {
 
     const styles = useStyles()
 
-    const [favorites, setFavorites] = useState([])
+    const [favorites, setFavorites] = useState<Favorite[]>([])
 
     const remove = (url: string) => {
-        const newFavs = favorites.filter(favorite => favorite.url != url)
-
-        setFavorites(newFavs)
-        storage.set('favs', JSON.stringify(newFavs))
+        if (favorites) {
+            const newFavs = favorites.filter(favorite => favorite.url != url)
+            setFavorites(newFavs)
+            storage.set('favs', JSON.stringify(newFavs))
+        }
     }
 
 
