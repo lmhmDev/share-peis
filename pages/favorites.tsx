@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     }
 })
 
-const favorites = () => {
+const Favorites = () => {
 
     const styles = useStyles()
 
@@ -47,4 +47,4 @@ const favorites = () => {
     )
 }
 
-export default favorites
+export default Favorites
